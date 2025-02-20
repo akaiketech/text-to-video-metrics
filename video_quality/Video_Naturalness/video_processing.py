@@ -1,6 +1,6 @@
-from image_statistics import *
-from Inception.inception_score import Inception_Score
-from Inception.inception_model import Inception_Model
+from .image_statistics import *
+from .Inception.inception_score import Inception_Score
+from .Inception.inception_model import Inception_Model
 import skvideo.io
 import skvideo.utils
 import os
@@ -220,10 +220,8 @@ def calculate_naturalness_score(file_path):
 
    
     data = process_videos(file_path)
-
-    # Load the trained XGBoost classifier
     current_dir = os.getcwd()
-    model_path = os.path.join(current_dir, "Classifier/xgb_model_last.pkl")
+    model_path = os.path.join(current_dir, "video_naturalness/Classifier/xgb_model_last.pkl")
     with open(model_path, 'rb') as f:
         loaded_model = pickle.load(f)
 
