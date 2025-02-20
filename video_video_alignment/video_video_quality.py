@@ -61,3 +61,5 @@ def compute_video_to_video_quality(generated_video_path, reference_video_path, d
     result['ssim'] = calculate_ssim(generated_video_path, reference_video_path, only_final=only_final)
 
     print(json.dumps(result, indent=4))
+
+    return result
