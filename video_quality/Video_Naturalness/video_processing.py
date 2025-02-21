@@ -224,6 +224,7 @@ def calculate_naturalness_score(file_path):
         loaded_model = pickle.load(f)
 
     new_df = data.iloc[:, :-1]
+    new_df.fillna(0,inplace=True)
     confidence_scores = loaded_model.predict_proba(new_df)[:, 0]
 
     video_names = data['video_name']

@@ -50,7 +50,7 @@ class VideoVideoAlignment:
         
    
         fvd_score = calculate_fvd(videos1, videos2, device, method='styleganv', only_final=False)
-        ssim_score = calculate_ssim(self.generated_video_path, self.reference_video_path, only_final=False)
+        ssim_score = calculate_ssim(self.generated_video_path, self.reference_video_path)
         
        
         video_name = os.path.basename(self.generated_video_path)
@@ -59,7 +59,7 @@ class VideoVideoAlignment:
             'reference_video': [os.path.basename(self.reference_video_path)],
             'fvd_score': [fvd_score],
             'ssim_score': [ssim_score],
-            'combined_score': [(fvd_score + ssim_score) / 2]  # Simple average of both scores
+            'combined_score': [(fvd_score + ssim_score) / 2]  
         })
         
        
