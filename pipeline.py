@@ -27,21 +27,19 @@ class Pipeline:
 
     def generate_report(self, results: PipelineResults):
  
-        final_df = text_video_df.merge(video_quality_df, on='video_name', how='outer')\
-                               .merge(video_video_df, on='video_name', how='outer')
+        final_df = results.text_video_df.merge(results.video_quality_df, on='video_name', how='outer')\
+                               .merge(results.video_video_df, on='video_name', how='outer')
         
 
         metrics_df = pd.DataFrame([
-            text_video_metrics,
-            video_quality_metrics,
-            video_video_metrics
+            results.text_video_metrics,
+            results.video_quality_metrics,
+            results.video_video_metrics
         ])
         
-   
         final_df.to_csv("detailed_results.csv", index=False)
         metrics_df.to_csv("metrics_summary.csv", index=False)
         
-  
         report = {
             'detailed_results': final_df,
             'metrics_summary': metrics_df
