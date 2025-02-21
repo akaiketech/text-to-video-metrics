@@ -63,7 +63,7 @@ def process_videos(video_path:str) -> pd.DataFrame:
   kp_dist_mean_vid, desc_len_mean_vid, desc_len_std_vid = [], [], []
   incept_score_0, incept_score_1, incept_model, vid_names = [], [], [], []
   current_dir = os.getcwd()
-  filename_yuv = os.path.join(current_dir, "misc/test.yuv")
+  filename_yuv = os.path.join(current_dir, "video_quality/misc/test.yuv")
   for video_file in file_list:
     niqe_vals, niqe_v_vals, niqe_y_vals, niqe_u_vals, brisque_vals = [], [], [], [], []
     sharpness_vals, entropy_vals, spectral_vals = [], [], []
@@ -71,9 +71,9 @@ def process_videos(video_path:str) -> pd.DataFrame:
     num_blobs_vals, avg_size_blobs_vals, desc_len_mean_vals, desc_len_std_vals = [], [], [], []
     texture_mean_vals, texture_std_vals, color_dist_vals= [], [], []
     try:
-      i_s_0 = Inception_Score(input_filepath=video_file, output_filepath=os.path.join(current_dir, "misc/res.csv") , model_type=0)
-      i_s_1 = Inception_Score(input_filepath=video_file, output_filepath=os.path.join(current_dir, "misc/res.csv"), model_type=1)
-      i_m = Inception_Model(input_filepath=video_file, output_filepath=os.path.join(current_dir, "misc/res.csv"), use_modified=True)
+      i_s_0 = Inception_Score(input_filepath=video_file, output_filepath=os.path.join(current_dir, "video_quality/misc/res.csv") , model_type=0)
+      i_s_1 = Inception_Score(input_filepath=video_file, output_filepath=os.path.join(current_dir, "video_quality/misc/res.csv"), model_type=1)
+      i_m = Inception_Model(input_filepath=video_file, output_filepath=os.path.join(current_dir, "video_quality/misc/res.csv"), use_modified=True)
       incept_score_0.append(i_s_0.results['inception_score'][0])
       incept_score_1.append(i_s_1.results['inception_score'][0])
       incept_model.append(i_m.results['inception'][0])
@@ -111,7 +111,7 @@ def process_videos(video_path:str) -> pd.DataFrame:
         # Read a frame from the video
         ret, colour_frame = cap.read()
         if ret:
-          colour_image_file = os.path.join(current_dir, "misc/colour_frame.jpg") # colour image
+          colour_image_file = os.path.join(current_dir, "video_quality/misc/colour_frame.jpg") # colour image
           # keep this as well to avoid mistakes
           cv2.imwrite(colour_image_file, colour_frame)
             # if the video is make-a-video or imagen removing water marks
@@ -131,10 +131,10 @@ def process_videos(video_path:str) -> pd.DataFrame:
           y_channel_frame =  vid_yuv444[i, :, :, 0]
           u_channel_frame =  vid_yuv444[i, :, :, 1]
           v_channel_frame =  vid_yuv444[i, :, :, 2]
-          y_frame_image = os.path.join(current_dir, "misc/y_frame.jpg")
-          u_frame_image = os.path.join(current_dir, "misc/u_frame.jpg")
-          v_frame_image = os.path.join(current_dir, "misc/v_frame.jpg")
-          image_file = os.path.join(current_dir, "misc/frame.jpg") # gray image
+          y_frame_image = os.path.join(current_dir, "video_quality/misc/y_frame.jpg")
+          u_frame_image = os.path.join(current_dir, "video_quality/misc/u_frame.jpg")
+          v_frame_image = os.path.join(current_dir, "video_quality/misc/v_frame.jpg")
+          image_file = os.path.join(current_dir, "video_quality/misc/frame.jpg") # gray image
           cv2.imwrite(image_file, frame)
           cv2.imwrite(y_frame_image , y_channel_frame)
           cv2.imwrite(u_frame_image , u_channel_frame)
@@ -211,7 +211,7 @@ def process_videos(video_path:str) -> pd.DataFrame:
           }
 
   df = pd.DataFrame(data)
-  df.to_csv(os.path.join(current_dir, "misc/video_statistics.csv"), index=False)
+  df.to_csv(os.path.join(current_dir, "video_quality/misc/video_statistics.csv"), index=False)
   return df
 
 def calculate_naturalness_score(file_path):
@@ -219,7 +219,7 @@ def calculate_naturalness_score(file_path):
 
     data = process_videos(file_path)
     current_dir = os.getcwd()
-    model_path = os.path.join(current_dir, "video_naturalness/Classifier/adaboost_model.pkl")
+    model_path = os.path.join(current_dir, "video_quality/Video_Naturalness/Classifier/adaboost_model.pkl")
     with open(model_path, 'rb') as f:
         loaded_model = pickle.load(f)
 

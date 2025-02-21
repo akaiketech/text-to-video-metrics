@@ -1,5 +1,5 @@
-from text_similarity.text_similarity_calculation import compute_similarity_score
-from text_similarity.caption_generation import generate_captions
+from text_video_alignment.text_similarity.text_similarity_calculation import compute_similarity_score
+from text_video_alignment.text_similarity.caption_generation import generate_captions
 
 
 class TextToVideoAlignment:
