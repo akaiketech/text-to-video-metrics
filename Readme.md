@@ -25,7 +25,7 @@ Implements Fréchet Video Distance (FVD) and Structural Similarity Index (SSIM) 
 
 ```bash
 git clone https://github.com/your-username/akaiketech-text-to-video-metrics.git
-cd akaiketech-text-to-video-metrics
+cd text-to-video-metrics
 pip install -r requirements.txt
 ```
 
