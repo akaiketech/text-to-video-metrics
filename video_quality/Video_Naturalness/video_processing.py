@@ -209,38 +209,31 @@ def process_videos(video_path:str) -> pd.DataFrame:
           'desc_len_mean' : desc_len_mean_vid, 'desc_len_std' : desc_len_std_vid,
           'inception_score_0': incept_score_0, 'inception_score_1': incept_score_1, 'inception_model' : incept_model, 'video_name' : vid_names
           }
-  # create a DataFrame to store all extracted information for each video
+
   df = pd.DataFrame(data)
-  # save the dataframe to a CSV
   df.to_csv(os.path.join(current_dir, "misc/video_statistics.csv"), index=False)
   return df
 
 def calculate_naturalness_score(file_path):
     
 
-   
     data = process_videos(file_path)
     current_dir = os.getcwd()
-    model_path = os.path.join(current_dir, "video_naturalness/Classifier/xgb_model_last.pkl")
+    model_path = os.path.join(current_dir, "video_naturalness/Classifier/adaboost_model.pkl")
     with open(model_path, 'rb') as f:
         loaded_model = pickle.load(f)
 
-    # Make predictions on the video features using the loaded model
     new_df = data.iloc[:, :-1]
     confidence_scores = loaded_model.predict_proba(new_df)[:, 0]
 
-    # Create a dataframe with the video names and confidence scores
     video_names = data['video_name']
     results_df = pd.DataFrame({'video_name': video_names, 'confidence_score': confidence_scores})
 
-    # Save the results to a CSV file
     results_path = os.path.join(current_dir, "naturalness_results.csv")
     results_df.to_csv(results_path, index=False)
 
-
-
-    # Print the confidence scores to the console
     print(f"The confidence scores for the videos in {file_path} are:\n{confidence_scores}")
 
     return results_df
+
 

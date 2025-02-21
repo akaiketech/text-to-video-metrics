@@ -251,7 +251,7 @@ def compute_similarity_score(json_file_path):
     overall_avg_score = total_avg_score / len(video_captions) if video_captions else 0
     df['overall_avg_score'] = overall_avg_score
     
-    # Save results
+   
     df.to_csv('video_text_similarity.csv', index=False)
     print('Text Similarity data is stored in video_text_similarity.csv file.')
     
