@@ -64,33 +64,31 @@ def is_video(filename, filetypes=[".mp4", ".gif"]):
 
 
 
-def generate_captions(input_video_directory, output_path):
+def generate_captions(input_video_directory, output_path,captions_list=None):
     """
     This function takes in a video filepath.
     Generates BLIP captions for the video.
     Returns a dictionary of the captions.
     """
     
-
-    run_model = True
     video_directory = input_video_directory
     output_path = output_path
-
-
     complete_caption_dict = {}
-    isvideo, real_caption = is_video(video_directory)
-    if isvideo:
-        complete_caption_dict[real_caption.replace("_", " ")] = run_BLIP_model(video_directory)
-    else:
-        for model_type in os.listdir(video_directory):
-            filepath = f"{video_directory}/{model_type}/"
-            complete_caption_dict[model_type] = {}
-            print(model_type)
-            for video_name in os.listdir(filepath):
-                isvideo, real_caption = is_video(video_name)
-                if isvideo:
-                    complete_caption_dict[model_type][real_caption.replace("_", " ")] = run_BLIP_model(filepath+video_name)
+
+    videos_len=len(os.listdir(video_directory))         
+    if videos_len!=len(captions_list):
+        raise ValueError("The number of captions and videos do not match.")
+
+    for video_name, caption in zip(os.listdir(video_directory),captions_list):
+        isvideo, _= is_video(video_name)
+        if isvideo:
+            complete_caption_dict[caption] = run_BLIP_model(filepath+video_name)
 
     output_file = open(file=output_path, mode="w", encoding="utf-8")
     json.dump(complete_caption_dict, output_file, indent=4)
     output_file.close()
+           
+          
+                
+
+    

@@ -27,17 +27,20 @@ model = AutoModel.from_pretrained("sentence-transformers/paraphrase-xlm-r-multil
 import json
 def get_all_captions(json_file):
     '''
-    To extract original caption and generated captions from json file for a single video
+    Extract original captions and generated captions from json file for all videos
+    Returns a dictionary mapping original captions to their generated captions
     '''
     with open(json_file) as f:
         data = json.load(f)
-    all_lists = []
-    for key in data.keys():
-        original_caption = key.split('/')[-1]
-        for sublist in data[key].values():
-            print(sublist)
-            all_lists.append(sublist)
-    return original_caption, all_lists
+    
+    video_captions = {}
+    for original_caption, frame_captions in data.items():
+        all_captions = []
+        for frame_caption_list in frame_captions.values():
+            all_captions.extend(frame_caption_list)
+        video_captions[original_caption] = all_captions
+    
+    return video_captions
 
 
 def preprocess_text(text:str):
@@ -215,20 +218,42 @@ def find_unique_words(s1, s2):
     return unique_words
 
 
+
 def compute_similarity_score(json_file_path):
- 
-    if os.path.exists(json_file_path):
-        original_caption, captions = get_all_captions(json_file_path)
-    else:
+    '''
+    Compute similarity scores for all videos in the dataset
+    Returns a DataFrame with similarity scores for each video
+    '''
+    if not os.path.exists(json_file_path):
         print("File does not exist.")
-    original_caption, captions = get_all_captions(json_file_path)
-    best_caption, best_score, avg_score = compute_weighted_similarity(original_caption, captions)
-    # add the data to the list
+        return None
+
+    video_captions = get_all_captions(json_file_path)
+    
+
     data = []
-    data.append({'video_file': original_caption, 'best_caption': best_caption, 'best_score': best_score, 'avg_score': avg_score})
+    total_avg_score = 0
+    
+    for original_caption, captions in video_captions.items():
+        best_caption, best_score, avg_score = compute_weighted_similarity(original_caption, captions)
+        data.append({
+            'video_file': original_caption,
+            'best_caption': best_caption,
+            'best_score': best_score,
+            'individual_avg_score': avg_score
+        })
+        total_avg_score += avg_score
+    
+
     df = pd.DataFrame(data)
+    
+
+    overall_avg_score = total_avg_score / len(video_captions) if video_captions else 0
+    df['overall_avg_score'] = overall_avg_score
+    
+    # Save results
     df.to_csv('video_text_similarity.csv', index=False)
     print('Text Similarity data is stored in video_text_similarity.csv file.')
-
+    
     return df
     
