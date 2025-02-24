@@ -9,6 +9,5 @@ salesforce-lavis
 ffmpeg-quality-metrics
 opencv-python
 scikit-learn==1.4
-scikit-video
 peft==0.10.0
 numpy===1.23.0

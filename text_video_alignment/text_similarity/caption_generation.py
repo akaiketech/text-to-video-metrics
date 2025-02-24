@@ -82,7 +82,8 @@ def generate_captions(input_video_directory, output_path,captions_list=None):
     for video_name, caption in zip(os.listdir(video_directory),captions_list):
         isvideo, _= is_video(video_name)
         if isvideo:
-            complete_caption_dict[caption] = run_BLIP_model(video_directory+video_name)
+            video_path = os.path.join(video_directory, video_name)
+            complete_caption_dict[caption] = run_BLIP_model(video_path)
 
     output_file = open(file=output_path, mode="w", encoding="utf-8")
     json.dump(complete_caption_dict, output_file, indent=4)
