@@ -1,6 +1,6 @@
 from .image_statistics import *
-from .Inception.inception_score import Inception_Score
-from .Inception.inception_model import Inception_Model
+from .inception_prediction.inception_score import Inception_Score
+from .inception_prediction.inception_model import Inception_Model
 import skvideo.io
 import skvideo.utils
 import os
@@ -220,7 +220,7 @@ def calculate_naturalness_score(file_path):
 
     data = process_videos(file_path)
     current_dir = os.getcwd()
-    model_path = os.path.join(current_dir, "video_quality/video_naturalness/classifier/adaboost_model.pkl")
+    model_path = os.path.join(current_dir, "video_quality/video_naturalness_prediction/classifier_model/adaboost_model.pkl")
     with open(model_path, 'rb') as f:
         loaded_model = pickle.load(f)
 
