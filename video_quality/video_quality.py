@@ -1,4 +1,4 @@
-from .Video_Naturalness.video_processing import *
+from .video_naturalness.video_processing import *
 import pandas as pd
 
 

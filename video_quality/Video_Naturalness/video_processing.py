@@ -39,6 +39,7 @@ def process_videos(video_path:str) -> pd.DataFrame:
        A dataframe with the extracted features for each video.
   '''    
   # check if it as a single video or a directory with videos
+  file_list = []
   if os.path.isfile(video_path):
     _, file_ext = os.path.splitext(video_path)
     if file_ext.lower() not in ['.mp4', '.gif']:
@@ -219,7 +220,7 @@ def calculate_naturalness_score(file_path):
 
     data = process_videos(file_path)
     current_dir = os.getcwd()
-    model_path = os.path.join(current_dir, "video_quality/Video_Naturalness/Classifier/adaboost_model.pkl")
+    model_path = os.path.join(current_dir, "video_quality/video_naturalness/classifier/adaboost_model.pkl")
     with open(model_path, 'rb') as f:
         loaded_model = pickle.load(f)
 

@@ -4,8 +4,9 @@ import cv2
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from calculate_fvd import calculate_fvd
-from calculate_ssim import calculate_ssim
+from .calculate_fvd import calculate_fvd
+from .calculate_ssim import calculate_ssim
+import os
 
 class VideoVideoAlignment:
     def __init__(self, generated_video_path, reference_video_path):
