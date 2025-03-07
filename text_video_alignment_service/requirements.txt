@@ -1,0 +1,3 @@
+salesforce-lavis
+celery
+scikit-learn

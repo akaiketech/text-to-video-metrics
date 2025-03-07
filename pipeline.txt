@@ -1,0 +1,37 @@
+text_video_metrics/
+├── docker-compose.yml
+│   ├── Dockerfile
+│   ├── server.py
+│   ├── requirements.txt
+│   └── routers/
+│       ├── __init__.py
+│       ├── video_quality.py
+│       └── alignment.py
+    worker/
+      __init__.py
+      celery.py
+      tasks.py
+├── video_quality_service/
+│   ├── Dockerfile
+│   ├── worker/
+│   │   ├── __init__.py
+│   │   ├── celery.py
+│   │   └── tasks.py
+│   ├── pipeline.py
+│   ├── utils/
+│   │   ├── __init__.py
+│   └── requirements.txt
+├── text_video_alignment_service/
+│   ├── Dockerfile
+│   ├── worker/
+│   │   ├── __init__.py
+│   │   ├── celery.py
+│   │   └── tasks.py
+│   ├── utils/
+│   │   ├── __init__.py
+│   ├── pipeline.py
+│   └── requirements.txt
+└── config/
+    ├── __init__.py
+    ├── secrets.py
+    └── settings.py
