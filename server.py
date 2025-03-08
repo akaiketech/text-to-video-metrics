@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import video_quality, alignment
+from routers import video_quality, alignment
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Video Analysis API")

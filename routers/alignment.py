@@ -1,8 +1,8 @@
 from fastapi import *
 from typing import List
-from ..schemas import TextVideoAlignmentRequest
-from ..text_video_alignment_service.pipeline import TextToVideoAlignment
-from ..text_video_alignment_service.worker import process_text_video_alignment,celery_app
+from schemas import TextVideoAlignmentRequest
+from text_video_alignment_service.pipeline import TextToVideoAlignment
+from text_video_alignment_service.worker import process_text_video_alignment, celery_app
 import tempfile
 import shutil
 import uuid
@@ -83,7 +83,7 @@ async def evaluate_text_video_alignment(
 
 
 
-router.get("/evaluate/celery")
+@router.get("/evaluate/celery")
 async def evaluate_text_video_alignment(
     files: List[UploadFile] = File(...),
     captions: str = Form(...),
@@ -114,9 +114,6 @@ async def evaluate_text_video_alignment(
                 shutil.copyfileobj(file.file, buffer)
             video_paths.append(file_path)
         
-        
-        
-      
         task = process_text_video_alignment.delay(temp_video_dir, captions_list, temp_caption_dir)
         
         logger.info(f"Submitted task with ID: {task.id}")

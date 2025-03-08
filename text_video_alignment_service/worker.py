@@ -1,6 +1,6 @@
 import os
 from celery import Celery
-from .pipeline import TextToVideoAlignment
+from pipeline import TextToVideoAlignment
 import tempfile
 import shutil
 import uuid
