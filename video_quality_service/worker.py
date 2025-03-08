@@ -1,6 +1,6 @@
 import os
 from celery import Celery
-from .pipeline import VideoQuality
+from pipeline import VideoQuality
 
 
 

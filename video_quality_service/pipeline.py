@@ -1,4 +1,4 @@
-from .utils.video_processing import *
+from utils.video_processing import *
 import pandas as pd
 
 

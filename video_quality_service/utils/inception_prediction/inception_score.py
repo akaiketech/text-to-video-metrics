@@ -13,7 +13,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 # Inception Model and Image Processing
 from keras.applications.inception_v3 import InceptionV3, preprocess_input
 
-# Import functions from other files
+# Update relative import to absolute import for utils
 from .utils import create_image_list, recalculate_class_prob, smooth_frame_probability
 
 class Inception_Score():
